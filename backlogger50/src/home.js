@@ -4,7 +4,6 @@ import axios from 'axios';
 
 function Home() {
     let runTime = 0;
-    const IGDBClientID = "qhq8oh9pel5ocqp5jxqlkpyo5guqe8";
     const [searchText, setSearchText] = useState();
 
     useEffect(() => {
@@ -13,7 +12,6 @@ function Home() {
             return;
         }
         runTime++;
-        //localStorage.setItem("expiryTime", Date.now() + 60)
         //DEBUG
         console.log("Date.now():", Date.now());
         console.log("expiryTime:", localStorage.getItem("expiryTime"));
@@ -28,7 +26,7 @@ function Home() {
         //Get Tokken Data
         axios
         .post(`${process.env.REACT_APP_ENDPOINT}`,{
-            action: 'igdb-tokken'
+            action: 'igdb-token'
         })
         .then((response)=>{
             console.log(response.data)
@@ -49,17 +47,14 @@ function Home() {
       };
 
     const Search = ()=>{
-        //alert(searchText);
-        const headers = {
-            'Client-ID': IGDBClientID, // Replace with your actual client ID
-            'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
-            };
+        console.log('Search:', searchText);
         axios
-        .post('https://api.igdb.com/v4/games/',{
-            //headers: headers
+        .post(`${process.env.REACT_APP_ENDPOINT}`,{
+            action: 'test',
+            token: localStorage.getItem("accessToken")
         })
         .then((response)=>{
-            console.log('Response:', response.data)
+            console.log(response.data)
         })
         .catch((error)=>{
             console.error(error);
