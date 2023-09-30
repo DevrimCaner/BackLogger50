@@ -1,7 +1,11 @@
 
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
-import './App.css';
 import Home from './home.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import './App.css';
 
 function App() {
 
