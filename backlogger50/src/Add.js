@@ -1,4 +1,5 @@
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddCard from './AddCard';
@@ -6,8 +7,15 @@ import AddCard from './AddCard';
 function Add() {
     let runTime = 0;
     const [searchText, setSearchText] = useState();
+    const navigate = useNavigate();
+    const loggedIn = sessionStorage.getItem("loggedIn");
+    const user = sessionStorage.getItem("user");
+    const passHash = sessionStorage.getItem("passHash");
 
     useEffect(() => {
+        if(!loggedIn || !user || !passHash){
+            navigate('/login');
+        }
         // This code is only for development stage
         if(runTime !== 0){
             return;

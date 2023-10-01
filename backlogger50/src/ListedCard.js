@@ -1,7 +1,7 @@
-function AddCard(props) {
+function ListedCard(props) {
     return (
-        <div className='col-sm-6 col-md-4 col-lg-3'>
-        <div className="w-100 card m-0 mb-3 p-0 bg-dark bg-gradient text-light shadow rounded-0 border border-primary">
+        <div className='col-lg-4'>
+        <div className="w-100 card m-0 mb-3 p-0 bg-dark bg-gradient text-light shadow rounded-0 border border-success">
             <div className='card-header p-0 border-bottom-0'>
                     <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co2ed3.png" className="img-fluid rounded-0 w-100"/>
             </div>
@@ -38,9 +38,10 @@ function AddCard(props) {
             <div className="card-footer border-top-0 mt-2">
                 <div className='row'>
                     <div className='col-6 m-0 p-0'>
+                        <button class="btn btn-lg btn-outline-danger border-0 text-light bg-gradient rounded-0 d-flex justify-content-end"><i class="bi bi-trash"></i></button>
                     </div>
                     <div className='col-6 m-0 p-0 d-flex d-flex justify-content-end'>
-                        <button class="shadow btn btn-lg btn-primary bg-gradient rounded-0 "><i class="bi bi-plus-lg"></i></button>
+                        <button class="shadow btn btn-lg btn-success bg-gradient rounded-0 "><i class="bi bi-check-lg"></i></button>
                     </div>
                 </div>
             </div>
@@ -49,4 +50,4 @@ function AddCard(props) {
     );
   }
   
-  export default AddCard;
+  export default ListedCard;
