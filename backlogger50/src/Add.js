@@ -86,7 +86,7 @@ function Add() {
                     <h1 className='text-center mb-4'>Add Game</h1>
                     <div className='row'>
                         <div className="input-group mb-3">
-                            <input class="form-control me-2 text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search"/>
+                            <input class="form-control text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search"/>
                         </div>
                     </div>
 

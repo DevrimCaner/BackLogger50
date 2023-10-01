@@ -1,8 +1,21 @@
 function Register(props) {
     return (
-      <>
-        <h1>Register</h1>
-      </>
+      <section>
+        <div className="container mt-5">
+          <div className="row">
+            <div className="col col-md-6 mx-auto">
+              <div className="container w-100 mt-5 border shadow bg-dark bg-gradient bg-opacity-75">
+                <h1 className="h2 my-5 text-center">Register to BackLogger50</h1>
+                  <input class="form-control mb-4 text-light bg-secondary bg-gradient bg-opacity-50 shadow rounded-0" type="text" placeholder="Email"/>
+                  <input class="form-control mb-4 text-light bg-secondary bg-gradient bg-opacity-50 shadow rounded-0" type="text" placeholder="Username"/>
+                  <input class="form-control mb-4 text-light bg-secondary bg-gradient bg-opacity-50 shadow rounded-0" type="Password" placeholder="Password"/>
+                  <input class="form-control mb-4 text-light bg-secondary bg-gradient bg-opacity-50 shadow rounded-0" type="Password" placeholder="Confirm Password"/>
+                  <button class="shadow mb-5 px-4 btn btn-primary bg-gradient rounded-0 ">Register</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     );
   }
   
