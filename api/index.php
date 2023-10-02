@@ -37,6 +37,9 @@ switch($data['action']){
     case 'register':
         print_r($data);
     break;
+    case 'login':
+        print_r($data);
+    break;
     default:
         ExitWError('Unknown Action');
     break;

@@ -35,7 +35,7 @@ function Register() {
     }
     setWarningMessage('')
     // Setup the Password Hash
-    const hash = await Sha256('test');
+    const hash = await Sha256(password);
     // Post
     axios
     .post(`${process.env.REACT_APP_ENDPOINT}`,{
