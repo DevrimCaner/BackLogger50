@@ -1,4 +1,6 @@
 <?php
+//hash('sha256', $test)
+//date("Y-m-d H:i:s")
 include_once 'config/header-config.php';
 include_once 'library/Response.php';
 include_once 'library/Database.php';
@@ -31,6 +33,9 @@ switch($data['action']){
         $igdb = new IGDB();
         echo json_encode($igdb->GetToken());
         exit;
+    break;
+    case 'register':
+        print_r($data);
     break;
     default:
         ExitWError('Unknown Action');

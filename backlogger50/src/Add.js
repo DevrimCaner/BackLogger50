@@ -1,4 +1,3 @@
-import './App.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -76,7 +75,8 @@ function Add() {
         .catch((error)=>{
             console.error(error);
         });
-    }
+    };
+
   return (
     <>
     <section className='mt-5'>
@@ -86,7 +86,7 @@ function Add() {
                     <h1 className='text-center mb-4'>Add Game</h1>
                     <div className='row'>
                         <div className="input-group mb-3">
-                            <input class="form-control text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search"/>
+                            <input className="form-control text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search"/>
                         </div>
                     </div>
 

@@ -4,9 +4,9 @@ function Navbar(props) {
     const passHash = sessionStorage.getItem("passHash");
     return (
         <>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient shadow">
             <div className="container-fluid">
-                <a class="navbar-brand h1 text-light mb-0" href="/"><span className="text-success">Back</span><span className="text-primary">Logger</span><span className="text-secondary">50</span></a>
+                <a className="navbar-brand h1 text-light mb-0" href="/"><span className="text-success">Back</span><span className="text-primary">Logger</span><span className="text-secondary">50</span></a>
                 <button className="navbar-toggler rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
