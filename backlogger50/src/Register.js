@@ -7,12 +7,15 @@ function Register() {
   const navigate = useNavigate();
   const [warningMessage, setWarningMessage] = useState();
   const [errorMessage, setErrorMessage] = useState();
+  const [successMessage, setSuccessMessage] = useState();
   const [mail, setMail] = useState();
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
   const [confirm, setConfirm] = useState();
 
   const Register = async () => {
+    setErrorMessage('');
+    setWarningMessage('');
     if(!mail){
       setWarningMessage('Please Fill the Email field.');
       return;
@@ -45,12 +48,19 @@ function Register() {
         password: hash,
     })
     .then((response)=>{
-        console.log(response.data)
         if(response.data.error){
           setErrorMessage(response.data.error);
         }
+        else if(response.data.success){
+          setSuccessMessage(response.data.success);
+          // Foward
+          setTimeout(() => {
+            navigate('/login');
+        }, 3000);
+        }
         else{
-          navigate('/login');
+          console.log(response.data)
+          setErrorMessage('Unknown Error!');
         }
     })
     .catch((error)=>{
@@ -84,6 +94,13 @@ function Register() {
                   errorMessage ? (
                     <div className="alert alert-danger rounded-0 bg-dark text-danger border border-danger" role="alert">
                       {errorMessage}
+                    </div>
+                  ):(<></>)
+                  }
+                  {
+                  successMessage ? (
+                    <div className="alert alert-success rounded-0 bg-dark text-success border border-success" role="alert">
+                      {successMessage}
                     </div>
                   ):(<></>)
                   }
