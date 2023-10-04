@@ -19,18 +19,11 @@ if(!isset($data['action'])){
 //Action Handler
 switch($data['action']){
     case 'test':
-        //ExitWError('Test Successful!');
         $token = $data['token'];
         $igdb = new IGDB();
         echo json_encode($igdb->GetSampleData($token));
     break;
     case 'igdb-token':
-        /*
-        $user = $data['user'];
-        $password = $data['password'];
-        $user = CheckCredentials($user, $password);
-        */
-        //hash('sha256', $test)
         $igdb = new IGDB();
         echo json_encode($igdb->GetToken());
         exit;

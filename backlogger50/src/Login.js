@@ -72,25 +72,25 @@ function Login(props) {
                   <input className="form-control mb-4 text-light bg-secondary bg-gradient bg-opacity-50 shadow rounded-0" type="Password" placeholder="Password" value={password || ''} onChange={(e) => setPassword(e.target.value)}/>
                   <button className="shadow mb-5 px-4 btn btn-primary bg-gradient rounded-0" onClick={Login}>Login</button>
                   {
-                  warningMessage ? (
+                  warningMessage && (
                     <div className="alert alert-warning rounded-0 bg-dark text-warning border border-warning" role="alert">
                       {warningMessage}
                     </div>
-                  ):(<></>)
+                  )
                   }
                   {
-                  errorMessage ? (
+                  errorMessage && (
                     <div className="alert alert-danger rounded-0 bg-dark text-danger border border-danger" role="alert">
                       {errorMessage}
                     </div>
-                  ):(<></>)
+                  )
                   }
                   {
-                  successMessage ? (
+                  successMessage && (
                     <div className="alert alert-success rounded-0 bg-dark text-success border border-success" role="alert">
                       {successMessage}
                     </div>
-                  ):(<></>)
+                  )
                   }
               </div>
             </div>

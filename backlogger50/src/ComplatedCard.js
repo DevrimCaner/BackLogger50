@@ -9,39 +9,39 @@ function ComplatedCard(props) {
                 <h4 className="card-title mb-0 opacity-75">Assassin's Creed Valhalla</h4>
                 <h5 className="card-text text-secondary fst-italic m-0 fs-6 opacity-75">10 11 2020</h5>
                 <div className='card-text mt-2 opacity-75'>
-                    <span class="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i class="bi bi-windows "></i>
+                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                        <i className="bi bi-windows "></i>
                     </span>
-                    <span class="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i class="bi bi-steam"></i>
+                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                        <i className="bi bi-steam"></i>
                     </span>
-                    <span class="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i class="bi bi-apple"></i>
+                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                        <i className="bi bi-apple"></i>
                     </span>
-                    <span class="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i class="bi bi-nvidia"></i>
+                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                        <i className="bi bi-nvidia"></i>
                     </span>
-                    <span class="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i class="bi bi-playstation"></i>
+                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                        <i className="bi bi-playstation"></i>
                     </span>
-                    <span class="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i class="bi bi-xbox"></i>
+                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                        <i className="bi bi-xbox"></i>
                     </span>
-                    <span class="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i class="bi bi-nintendo-switch"></i>
+                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                        <i className="bi bi-nintendo-switch"></i>
                     </span>
-                    <span class="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i class="bi bi-android2"></i>
+                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                        <i className="bi bi-android2"></i>
                     </span>
                 </div>
             </div>
             <div className="card-footer border-top-0 mt-2">
                 <div className='row'>
                     <div className='col-6 m-0 p-0'>
-                        <button class="btn btn-lg btn-outline-danger border-0 text-light bg-gradient rounded-0 d-flex justify-content-end"><i class="bi bi-trash"></i></button>
+                        <button className="btn btn-lg btn-outline-danger border-0 text-light bg-gradient rounded-0 d-flex justify-content-end"><i className="bi bi-trash"></i></button>
                     </div>
                     <div className='col-6 m-0 p-0 d-flex d-flex justify-content-end'>
-                        <button class="shadow btn btn-lg btn-secondary bg-gradient rounded-0 "><i class="bi bi-arrow-counterclockwise"></i></button>
+                        <button className="shadow btn btn-lg btn-secondary bg-gradient rounded-0 "><i className="bi bi-arrow-counterclockwise"></i></button>
                     </div>
                 </div>
             </div>

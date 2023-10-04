@@ -1,10 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 function Navbar(props) {
+    const location = useLocation();
     const navigate = useNavigate();
     const loggedIn = sessionStorage.getItem("loggedIn");
     const user = sessionStorage.getItem("user");
+    
     const Logout = () => {
         // Send Post
         axios
@@ -32,10 +34,10 @@ function Navbar(props) {
                         loggedIn ? (
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="/add">Add</a>
+                                    <a className={`nav-link ${location.pathname === '/add' && 'active'}`} aria-current="page" href="/add">Add </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/list">List</a>
+                                    <a className={`nav-link ${location.pathname === '/list' && 'active'}`} href="/list">List</a>
                                 </li>
                             </ul>
                         ):(
