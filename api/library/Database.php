@@ -7,6 +7,27 @@ class Database{
     public function __construct(PDO $db) {
         $this->db = $db;
     }
+    public function CheckCredentials(User $user = null){
+        if(!$user){
+            return false;
+        }
+        if(!$user->CheckName()){
+            return false;
+        }
+        if(!$user->CheckPassword()){
+            return false;
+        }
+        $query = $this->db->prepare("SELECT COUNT(id) FROM users WHERE name = :name AND password = :password");
+        $query->execute([
+            'name' => $user->name,
+            'password' => $user->password
+        ]);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if($result['COUNT(id)'] == 1){
+            return true;
+        }
+        return false;
+    }
     public function RegisterUser(User $user = null){
         if(!$user){
             ExitWError('Invaild User Data !');
@@ -73,7 +94,7 @@ class User{
     public $password;
     public $mail;
 
-    public function __construct($name, $password, $mail = null) {
+    public function __construct($name, $password, $mail = '') {
         $this->name = htmlspecialchars(trim($name));
         $this->password = htmlspecialchars(trim($password));
         $this->mail = htmlspecialchars(trim($mail));

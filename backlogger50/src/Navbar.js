@@ -1,7 +1,24 @@
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 function Navbar(props) {
+    const navigate = useNavigate();
     const loggedIn = sessionStorage.getItem("loggedIn");
     const user = sessionStorage.getItem("user");
-    const passHash = sessionStorage.getItem("passHash");
+    const Logout = () => {
+        // Send Post
+        axios
+        .post(`${process.env.REACT_APP_ENDPOINT}`,{
+            action: 'logout'
+        })
+        .then((response)=>{
+            sessionStorage.clear();
+            navigate('/');
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
+    };
     return (
         <>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient shadow">
@@ -30,8 +47,8 @@ function Navbar(props) {
                         {
                             loggedIn ? (
                                 <>
-                                <a className="btn btn-outline-primary text-light rounded-0 border-0 disabled" href=''>Admin</a>
-                                <button className="btn btn-outline-danger text-light rounded-0 border-0"><i className="bi bi-box-arrow-right"></i></button>
+                                <a className="btn btn-outline-primary text-light rounded-0 border-0 disabled" href=''>{user}</a>
+                                <button className="btn btn-outline-danger text-light rounded-0 border-0" onClick={Logout}><i className="bi bi-box-arrow-right"></i></button>
                                 </>
                             ):(
                                 <>

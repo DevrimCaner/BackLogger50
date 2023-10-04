@@ -4,6 +4,8 @@ include_once 'library/Response.php';
 include_once 'library/Database.php';
 include_once 'library/IGDB.php';
 
+session_start();
+
 // Get Data Posted
 $data = json_decode(file_get_contents('php://input'), true);
 // Check Data exist
@@ -50,9 +52,21 @@ switch($data['action']){
         ExitWError('Error in Registration');
     break;
     case 'login':
-        $user = $data['user'];
-        $password = $data['password'];
-        print_r($data);
+        $name = isset($data['user']) ? $data['user'] : null;
+        $password = isset($data['password']) ? $data['password'] : null;
+        $user = new User($name, $password);
+        $database = new Database($db);
+        $check = $database->CheckCredentials($user);
+        if($check){
+            $_SESSION['user'] = $user;
+            $_SESSION['loggedIn'] = true;
+            ExitWSuccess('Login is Successful!');
+        }
+        ExitWError('Username or Password Incorrect');
+    break;
+    case 'logout':
+        session_destroy();
+        ExitWSuccess('Logout successful!');
     break;
     default:
         ExitWError('Unknown Action');

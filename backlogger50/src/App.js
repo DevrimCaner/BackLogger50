@@ -9,14 +9,12 @@ import List from './List.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import Navbar from './Navbar.js';
-
 import './App.css';
 
 function App() {
 
   return (
     <>
-    <Navbar/>
     <Router>
       <Routes>
         <Route path='/' exact Component={Main}/>

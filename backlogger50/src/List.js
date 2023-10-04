@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import ListedCard from './ListedCard';
 import ComplatedCard from './ComplatedCard';
 import { useEffect } from 'react';
+import Navbar from './Navbar.js';
 
 function List(props) {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ function List(props) {
   });
 
     return (
+      <>
+      <Navbar/>
       <section className='mt-5'>
         <div className="container">
           <div className='row'>
@@ -32,13 +35,12 @@ function List(props) {
                     
                     <div className='row shadow border border-dark bg-black bg-gradient ms-1 pt-3'>
                         <ComplatedCard/>
-                    </div>
-                    
+                    </div>    
               </div>
           </div>
-
         </div>
       </section>
+      </>
     );
   }
   

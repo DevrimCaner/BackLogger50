@@ -2,16 +2,21 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Sha256 } from './Functions';
 import axios from 'axios';
+import Navbar from './Navbar.js';
 
 function Login(props) {
   const navigate = useNavigate();
   const [warningMessage, setWarningMessage] = useState();
   const [errorMessage, setErrorMessage] = useState();
+  const [successMessage, setSuccessMessage] = useState();
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
 
 
   const Login = async () => {
+    setErrorMessage('');
+    setWarningMessage('');
+    setSuccessMessage('');
     if(!user){
       setWarningMessage('Please Fill the Username field.');
       return;
@@ -31,12 +36,23 @@ function Login(props) {
         password: hash,
     })
     .then((response)=>{
-        console.log(response.data)
         if(response.data.error){
           setErrorMessage(response.data.error);
         }
+        else if(response.data.success){
+          setSuccessMessage(response.data.success);
+          // Setup Session Data
+          sessionStorage.setItem('loggedIn', true);
+          sessionStorage.setItem('user', user);
+          sessionStorage.setItem('passHash', hash);
+          // Foward
+          setTimeout(() => {
+            navigate('/list');
+        }, 1000);
+        }
         else{
-          navigate('/list');
+          console.log(response.data)
+          setErrorMessage('Unknown Error!');
         }
     })
     .catch((error)=>{
@@ -44,6 +60,8 @@ function Login(props) {
     });
   };
     return (
+      <>
+      <Navbar/>
       <section>
         <div className="container mt-5">
           <div className="row">
@@ -67,11 +85,19 @@ function Login(props) {
                     </div>
                   ):(<></>)
                   }
+                  {
+                  successMessage ? (
+                    <div className="alert alert-success rounded-0 bg-dark text-success border border-success" role="alert">
+                      {successMessage}
+                    </div>
+                  ):(<></>)
+                  }
               </div>
             </div>
           </div>
         </div>
       </section>
+      </>
     );
   }
   

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddCard from './AddCard';
+import Navbar from './Navbar.js';
 
 function Add() {
     let runTime = 0;
@@ -79,6 +80,7 @@ function Add() {
 
   return (
     <>
+    <Navbar/>
     <section className='mt-5'>
         <div className="container">
             <div className='row'>

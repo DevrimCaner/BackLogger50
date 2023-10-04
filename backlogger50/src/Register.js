@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Sha256 } from './Functions';
 import axios from 'axios';
+import Navbar from './Navbar.js';
 
 function Register() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Register() {
   const Register = async () => {
     setErrorMessage('');
     setWarningMessage('');
+    setSuccessMessage('');
     if(!mail){
       setWarningMessage('Please Fill the Email field.');
       return;
@@ -72,6 +74,8 @@ function Register() {
   }, []);
 
     return (
+      <>
+      <Navbar/>
       <section>
         <div className="container mt-5">
           <div className="row">
@@ -109,6 +113,7 @@ function Register() {
           </div>
         </div>
       </section>
+      </>
     );
   }
   
