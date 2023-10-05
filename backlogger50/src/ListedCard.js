@@ -3,10 +3,10 @@ function ListedCard(props) {
         <div className='col-lg-4'>
         <div className="w-100 card m-0 mb-3 p-0 bg-dark bg-gradient text-light shadow rounded-0 border border-success">
             <div className='card-header p-0 border-bottom-0'>
-                    <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co2ed3.png" className="img-fluid rounded-0 w-100"/>
+                    <img src={`https:${props.image}`} className="img-fluid rounded-0 w-100"/>
             </div>
             <div className="card-body p-0 px-2 pt-1">
-                <h4 className="card-title mb-0">Assassin's Creed Valhalla</h4>
+                <h4 className="card-title mb-0">{props.name}</h4>
                 <h5 className="card-text text-secondary fst-italic m-0 fs-6">10 11 2020</h5>
                 <div className='card-text mt-2'>
                     <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">

@@ -9,24 +9,24 @@ class Database{
     }
     public function CheckCredentials(User $user = null){
         if(!$user){
-            return false;
+            return 0;
         }
         if(!$user->CheckName()){
-            return false;
+            return 0;
         }
         if(!$user->CheckPassword()){
-            return false;
+            return 0;
         }
-        $query = $this->db->prepare("SELECT COUNT(id) FROM users WHERE name = :name AND password = :password");
+        $query = $this->db->prepare("SELECT id FROM users WHERE name = :name AND password = :password");
         $query->execute([
             'name' => $user->name,
             'password' => $user->password
         ]);
         $result = $query->fetch(PDO::FETCH_ASSOC);
-        if($result['COUNT(id)'] == 1){
-            return true;
+        if($result){
+            return $result['id'];
         }
-        return false;
+        return 0;
     }
     public function RegisterUser(User $user = null){
         if(!$user){
@@ -64,6 +64,17 @@ class Database{
             return true;
         }
         return false;
+    }
+    public function GetList($id){
+        if(!is_numeric($id)){
+            return null;
+        }
+        $query = $this->db->prepare("SELECT content_id, status FROM lists WHERE user_id = :id ORDER BY content_id");
+        $query->execute([
+            'id' => $id
+        ]);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
     public function UserMailExist($mail){
         $query = $this->db->prepare("SELECT COUNT(id) FROM users WHERE mail = :mail");
