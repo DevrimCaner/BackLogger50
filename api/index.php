@@ -103,7 +103,7 @@ switch($data['action']){
             $current->id = $game->id;
             $current->name = $game->name;
             $current->status = $list[$key]['status'];
-            $current->cover = $covers[$key]->url;
+            $current->cover = $covers[$key]->image_id;
             // Push
             $response[] = $current;
         }

@@ -5,6 +5,7 @@ import axios from 'axios';
 // Companents
 import ListedCard from './ListedCard';
 import ComplatedCard from './ComplatedCard';
+import Card from './Card.js';
 import Navbar from './Navbar.js';
 
 function List() {
@@ -21,18 +22,13 @@ function List() {
       return;
     }
     runTime++;
+    Test()
     if(!loggedIn || !user || !passHash){
       navigate('/login');
     }
     GetList();
   },[]);
-// This code is only for development stage
-        if(runTime !== 0){
-            return;
-        }
   const Test = ()=>{
-    console.log(list);
-    return;
     axios
     .post(`${process.env.REACT_APP_ENDPOINT}`,{
         action: 'test',
@@ -78,12 +74,16 @@ function List() {
         <div className='row'>
             <div className='col-md-6'>
                   <h1 className='text-center mb-3 '>Listed</h1>
-                  {list.length > 0 && (
+                  {list.length > 0 ? (
                     <div className='row shadow border border-success bg-dark bg-gradient me-1 pt-3'>
-                      {list.map((item, index) => (
-                        <ListedCard key={index} name={item.name} image={item.cover} />
-                      ))}
+                      {list.map((game, index) => (
+                        <Card key={index} game={game} type={0} />
+                        ))}
                     </div>
+                  ):(
+                    <div className="spinner-border text-dark" role="status">
+                          <span className="visually-hidden"></span>
+                      </div>
                   )}
                   
             </div>

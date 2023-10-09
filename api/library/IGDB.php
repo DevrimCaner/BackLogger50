@@ -51,7 +51,7 @@ class IGDB{
     public function GetGamesCovers($token, $idString){
         global $clientId;
         $url = 'https://api.igdb.com/v4/covers';
-        $body = "fields url, height, width; where game=".$idString."; sort game;";
+        $body = "fields image_id, height, width; where game=".$idString."; sort game;";
         // Initialize cURL session
         $ch = curl_init($url);
         // Set cURL options
@@ -76,11 +76,11 @@ class IGDB{
     // DEVELOPMENT FUNC
     public function GetSampleData($token){
         global $clientId;
-        //$url = 'https://api.igdb.com/v4/games/';
-        //$body = "fields id, name; where id=(133004, 55056);";
+        $url = 'https://api.igdb.com/v4/games/';
+        $body = "fields id, name, cover, first_release_date; where id=133004;";
         //$body = "fields *; search \"Assassins Creed\";";
-        $url = 'https://api.igdb.com/v4/covers';
-        $body = "fields *; where game=(133004, 55056); sort id;";
+        //$url = 'https://api.igdb.com/v4/covers';
+        //$body = "fields *; where game=(133004, 55056); sort id;";
         // Initialize cURL session
         $ch = curl_init($url);
         // Set cURL options
