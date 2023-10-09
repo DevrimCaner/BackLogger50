@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 // Companents
-import ListedCard from './ListedCard';
-import ComplatedCard from './ComplatedCard';
 import Card from './Card.js';
 import Navbar from './Navbar.js';
 
@@ -76,7 +74,7 @@ function List() {
                   <h1 className='text-center mb-3 '>Listed</h1>
                   {list.length > 0 ? (
                     <div className='row shadow border border-success bg-dark bg-gradient me-1 pt-3'>
-                      {list.map((game, index) => (
+                      {list.filter(game => !game.status).map((game, index) => (
                         <Card key={index} game={game} type={0} />
                         ))}
                     </div>
@@ -85,14 +83,20 @@ function List() {
                           <span className="visually-hidden"></span>
                       </div>
                   )}
-                  
             </div>
             <div className='col-md-6'>
                   <h1 className='text-center mb-3'>Complated</h1>
-                  
-                  <div className='row shadow border border-dark bg-black bg-gradient ms-1 pt-3'>
-                      <ComplatedCard/>
-                  </div>    
+                  {list.length > 0 ? (
+                    <div className='row shadow border border-dark bg-black bg-gradient ms-1 pt-3'>
+                      {list.filter(game => game.status).map((game, index) => (
+                        <Card key={index} game={game} type={1} />
+                        ))}
+                    </div>
+                  ):(
+                    <div className="spinner-border text-dark" role="status">
+                          <span className="visually-hidden"></span>
+                      </div>
+                  )}
             </div>
         </div>
       </div>

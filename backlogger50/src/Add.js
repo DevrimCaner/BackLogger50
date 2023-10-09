@@ -1,16 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import AddCard from './AddCard';
+import Card from './Card';
 import Navbar from './Navbar.js';
 
 function Add() {
     let runTime = 0;
+    const searchTimeout = 2000;
     const [searchText, setSearchText] = useState();
+    const [results, setResults] = useState([]);
     const navigate = useNavigate();
     const loggedIn = sessionStorage.getItem("loggedIn");
     const user = sessionStorage.getItem("user");
     const passHash = sessionStorage.getItem("passHash");
+
+    const sampleData = [{cover: "co2n19", id: 621, name: "Call of Duty"}, {cover: "co1n24", id: 55056, name: "Age of Empires II: Definitive Edition"}];
 
     useEffect(() => {
         if(!loggedIn || !user || !passHash){
@@ -21,42 +25,27 @@ function Add() {
             return;
         }
         runTime++;
-        //DEBUG
-        console.log("Date.now():", Date.now());
-        console.log("expiryTime:", localStorage.getItem("expiryTime"));
-        console.log("accessToken:", localStorage.getItem("accessToken"));
-        // Check expiry time and token exist
-        if(localStorage.getItem("accessToken") === null || localStorage.getItem("expiryTime") < Date.now()){
-            SetupToken();
-        }
     }, []);
-    
-    const SetupToken = async () => {
-        //Get Tokken Data
-        axios
-        .post(`${process.env.REACT_APP_ENDPOINT}`,{
-            action: 'igdb-token'
-        })
-        .then((response)=>{
-            console.log(response.data)
-            // If tokken not geted
-            if(response.data.status){
-                console.error(response.data.status);
-                console.error(response.data.message);
-            }
-            else{
-                let newExpiryTime = response.data.expires_in + Date.now();
-                localStorage.setItem("expiryTime", newExpiryTime);
-                localStorage.setItem("accessToken", response.data.access_token);
-            }
-        })
-        .catch((error)=>{
-            console.error(error);
-        });
-      };
 
-    const Search = ()=>{
+    const HandleSearch = (text)=>{
+        setSearchText(text.trim());
         console.log('Search:', searchText);
+        if(!searchText || searchText.trim() == ''){
+            setResults([]);
+            return;
+        }
+        clearTimeout(window.timer);
+        window.timer = setTimeout(() => {
+            Search();
+        }, searchTimeout);
+    }
+    
+    const Search = ()=>{
+        if(!searchText ){
+            return;
+        }
+        setResults(sampleData);
+        return;
         axios
         .post(`${process.env.REACT_APP_ENDPOINT}`,{
             action: 'test',
@@ -88,20 +77,30 @@ function Add() {
                     <h1 className='text-center mb-4'>Add Game</h1>
                     <div className='row'>
                         <div className="input-group mb-3">
-                            <input className="form-control text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search"/>
+                            <input className="form-control text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search" onChange={(e) => HandleSearch(e.target.value)}/>
                         </div>
                     </div>
 
+                    {results.length > 0 ? (
                     <div className='row'>
-                        <AddCard/>
+                      {results.map((game, index) => (
+                        <Card key={index} game={game} type={2} />
+                        ))}
                     </div>
-                    
+                    ):(
                     <div className='row px-3'>
-                        <p className='text-center text-dark fst-italic fs-6'>To add games on list, make search on search box.</p>
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden"></span>
-                        </div>
+                        {
+                            searchText ? (
+                                <div className="spinner-border" role="status">
+                                    <span className="visually-hidden"></span>
+                                </div>
+                            ):
+                            (
+                                <p className='text-center text-dark fst-italic fs-6'>To add games on list, make search on search box.</p>
+                            )
+                        }
                     </div>
+                    )}                    
                 </div>
             </div>
 

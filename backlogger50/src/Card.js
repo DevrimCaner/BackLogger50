@@ -5,7 +5,7 @@
 */
 function Card(props) {
     return (
-    <div className={props.type == 2 ? ('col-sm-6 col-md-4 col-lg-3'):('col-lg-4')} >
+    <div className={props.type == 2 ? ('col-sm-6 col-md-4 col-lg-3'):('col-lg-6')} >
         <div className={`w-100 card m-0 mb-3 p-0 bg-dark bg-gradient text-light shadow rounded-0 border ${props.type == 0 && ('border-success')} ${props.type == 1 && ('border-secondary bg-opacity-50')} ${props.type == 2 && ('border-primary')}`} >
             <div className='card-header p-0 border-bottom-0'>
                     <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${props.game.cover}.png`} className={`img-fluid rounded-0 w-100 ${props.type == 1 && ('opacity-50')}`}/>
