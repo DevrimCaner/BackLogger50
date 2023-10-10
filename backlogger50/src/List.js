@@ -20,25 +20,12 @@ function List() {
       return;
     }
     runTime++;
-    Test()
     if(!loggedIn || !user || !passHash){
       navigate('/login');
     }
     GetList();
   },[]);
-  const Test = ()=>{
-    axios
-    .post(`${process.env.REACT_APP_ENDPOINT}`,{
-        action: 'test',
-        token: localStorage.getItem("accessToken")
-    })
-    .then((response)=>{
-        console.log(response.data)
-    })
-    .catch((error)=>{
-        console.error(error);
-    });
-};
+
   const GetList = ()=>{
     axios
     .post(`${process.env.REACT_APP_ENDPOINT}`,{
@@ -55,7 +42,6 @@ function List() {
           console.log(response.data.message);
         }
         else{
-          console.log("Data: ",response.data);
           setList(response.data);
         }
     })
@@ -79,7 +65,7 @@ function List() {
                         ))}
                     </div>
                   ):(
-                    <div className="spinner-border text-dark" role="status">
+                    <div className="spinner-border" role="status">
                           <span className="visually-hidden"></span>
                       </div>
                   )}
@@ -93,7 +79,7 @@ function List() {
                         ))}
                     </div>
                   ):(
-                    <div className="spinner-border text-dark" role="status">
+                    <div className="spinner-border" role="status">
                           <span className="visually-hidden"></span>
                       </div>
                   )}

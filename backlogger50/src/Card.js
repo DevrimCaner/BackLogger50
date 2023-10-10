@@ -1,9 +1,50 @@
-/*
-0 = Listed
-1 = Complated
-2 = Search / Add
-*/
+import { useEffect, useState } from 'react';
+
 function Card(props) {
+    const [platformPC, setPlatformPC] = useState();
+    const [platformMAC, setPlatformMAC] = useState();
+    const [platformLinux, setPlatformLinux] = useState();
+    const [platformPS, setPlatformPS] = useState();
+    const [platformXBOX, setPlatformXBOX] = useState();
+    const [platformSwitch, setPlatformSwitch] = useState();
+    const [platformIOS, setPlatformIOS] = useState();
+    const [platformAndroid, setPlatformAndroid] = useState();
+    const [dateString, setDateString] = useState();
+    useEffect(() =>{
+        // Setup Release Date
+        setDateString('');
+        if(props.game.first_release_date){
+            const date = new Date(props.game.first_release_date * 1000);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = date.toLocaleDateString(undefined, options);
+            setDateString(formattedDate);
+        }
+        // Setup Platforms
+        setPlatformPC(false);
+        setPlatformMAC(false);
+        setPlatformLinux(false);
+        setPlatformPS(false);
+        setPlatformXBOX(false);
+        setPlatformSwitch(false);
+        setPlatformIOS(false);
+        setPlatformAndroid(false)
+        if(props.game.platforms){
+            setPlatformPC(props.game.platforms.includes(6));
+            setPlatformMAC(props.game.platforms.includes(14));
+            setPlatformLinux(props.game.platforms.includes(3));
+
+            if(props.game.platforms.includes(7) || props.game.platforms.includes(8) || props.game.platforms.includes(9) || props.game.platforms.includes(48) || props.game.platforms.includes(167) || props.game.platforms.includes(38) || props.game.platforms.includes(46)){// 1, 2, 3, 4, 5 , psp, vita
+                setPlatformPS(true);
+            }
+            if(props.game.platforms.includes(11) || props.game.platforms.includes(12) || props.game.platforms.includes(49) || props.game.platforms.includes(169)){// xbox, 360, one, x|s
+                setPlatformXBOX(true);
+            }
+            setPlatformSwitch(props.game.platforms.includes(130));
+            setPlatformIOS(props.game.platforms.includes(39));
+            setPlatformAndroid(props.game.platforms.includes(34));
+        }
+    },[]);
+
     return (
     <div className={props.type == 2 ? ('col-sm-6 col-md-4 col-lg-3'):('col-lg-6')} >
         <div className={`w-100 card m-0 mb-3 p-0 bg-dark bg-gradient text-light shadow rounded-0 border ${props.type == 0 && ('border-success')} ${props.type == 1 && ('border-secondary bg-opacity-50')} ${props.type == 2 && ('border-primary')}`} >
@@ -12,32 +53,48 @@ function Card(props) {
             </div>
             <div className="card-body p-0 px-2 pt-1">
                 <h4 className={`card-title mb-0 ${props.type == 1 && ('opacity-75')}`}>{props.game.name}</h4>
-                <h5 className={`card-text text-secondary fst-italic m-0 fs-6 ${props.type == 1 && ('opacity-75')}`}>10 11 2020</h5>
+                <h5 className={`card-text text-secondary fst-italic m-0 fs-6 ${props.type == 1 && ('opacity-75')}`}>{dateString}</h5>
                 <div className={`card-text mt-2 ${props.type == 1 && ('opacity-75')}`}>
-                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i className="bi bi-windows "></i>
-                    </span>
-                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i className="bi bi-steam"></i>
-                    </span>
-                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i className="bi bi-apple"></i>
-                    </span>
-                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i className="bi bi-nvidia"></i>
-                    </span>
-                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i className="bi bi-playstation"></i>
-                    </span>
-                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i className="bi bi-xbox"></i>
-                    </span>
-                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i className="bi bi-nintendo-switch"></i>
-                    </span>
-                    <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
-                        <i className="bi bi-android2"></i>
-                    </span>
+                    { platformPC && (
+                        <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                            <i className="bi bi-windows "></i>
+                        </span>
+                    )}
+                    {platformMAC && (
+                        <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                            <i className="bi bi-apple"></i>
+                        </span>
+                    )}
+                    {platformLinux && (
+                        <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                            <i className="bi bi-ubuntu"></i>
+                        </span>
+                    )}
+                    {platformPS && (
+                        <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                            <i className="bi bi-playstation"></i>
+                        </span>
+                    )}
+                    {platformXBOX && (
+                        <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                            <i className="bi bi-xbox"></i>
+                        </span>
+                    )}
+                    {platformSwitch && (
+                        <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                            <i className="bi bi-nintendo-switch"></i>
+                        </span>
+                    )}
+                    {platformIOS && (
+                        <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                            <i className="bi bi-phone"></i>
+                        </span>
+                    )}
+                    {platformAndroid && (
+                        <span className="badge bg-secondary bg-gradient p-1 border rounded-0 border-dark m-1">
+                            <i className="bi bi-android2"></i>
+                        </span>
+                    )}
                 </div>
             </div>
             <div className="card-footer border-top-0 mt-2">

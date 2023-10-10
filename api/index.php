@@ -137,15 +137,18 @@ switch($data['action']){
 function CreateGamesReult($games, $covers, $list = null){
     $response = array();
     foreach($games as $key => $game){
+        /*
         $current = new stdClass();
         $current->id = $game->id;
         $current->name = $game->name;
-        $current->cover = FindImageinCovers($covers,$game->id);
+        $current->name = $game->platforms;
+        */
+        $game->cover = FindImageinCovers($covers,$game->id);
         if(isset($list)){
-            $current->status = $list[$key]['status'];
+            $game->status = $list[$key]['status'];
         }
         // Push
-        $response[] = $current;
+        $response[] = $game;
     }
     return $response;
 }

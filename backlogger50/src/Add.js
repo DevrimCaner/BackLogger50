@@ -50,7 +50,6 @@ function Add() {
                 setResults(response.data);
             }
             else{// Not Found
-                console.log(response.data);
                 setNotFound(true);
             }
         })
