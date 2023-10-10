@@ -5,9 +5,9 @@ import Card from './Card';
 import Navbar from './Navbar.js';
 
 function Add() {
-    let runTime = 0;
     const searchTimeout = 2000;
     const [searchText, setSearchText] = useState();
+    const [notFound, setNotFound] = useState();
     const [results, setResults] = useState([]);
     const navigate = useNavigate();
     const loggedIn = sessionStorage.getItem("loggedIn");
@@ -20,47 +20,39 @@ function Add() {
         if(!loggedIn || !user || !passHash){
             navigate('/login');
         }
-        // This code is only for development stage
-        if(runTime !== 0){
-            return;
-        }
-        runTime++;
-    }, []);
-
-    const HandleSearch = (text)=>{
-        setSearchText(text.trim());
-        console.log('Search:', searchText);
-        if(!searchText || searchText.trim() == ''){
-            setResults([]);
-            return;
-        }
+        // Search Actions
         clearTimeout(window.timer);
         window.timer = setTimeout(() => {
             Search();
         }, searchTimeout);
-    }
-    
+    }, [searchText]);
+
     const Search = ()=>{
-        if(!searchText ){
+        setNotFound(false);
+        setResults([]);
+        if(!searchText || searchText.trim() == ''){
             return;
         }
-        setResults(sampleData);
-        return;
         axios
         .post(`${process.env.REACT_APP_ENDPOINT}`,{
-            action: 'test',
-            token: localStorage.getItem("accessToken")
+            action: 'game-search',
+            user: user,
+            password: passHash,
+            token: localStorage.getItem("accessToken"),
+            searchText: searchText
         })
         .then((response)=>{
-            //console.log(response.data)
             if(response.data.error){
                 console.error(response.data.error);
                 return;
             }
-            let elements = JSON.parse(response.data);
-            elements.forEach(element => {
-                console.log(element);
-            });
+            if(response.data.length > 0){
+                setResults(response.data);
+            }
+            else{// Not Found
+                console.log(response.data);
+                setNotFound(true);
+            }
         })
         .catch((error)=>{
             console.error(error);
@@ -77,7 +69,7 @@ function Add() {
                     <h1 className='text-center mb-4'>Add Game</h1>
                     <div className='row'>
                         <div className="input-group mb-3">
-                            <input className="form-control text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search" onChange={(e) => HandleSearch(e.target.value)}/>
+                            <input className="form-control text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search" onChange={(e) => setSearchText(e.target.value)}/>
                         </div>
                     </div>
 
@@ -91,9 +83,15 @@ function Add() {
                     <div className='row px-3'>
                         {
                             searchText ? (
-                                <div className="spinner-border" role="status">
-                                    <span className="visually-hidden"></span>
-                                </div>
+                                    notFound ? (
+                                        <p className='text-center text-dark fst-italic fs-6'>Games Not Found.</p>
+                                    ):
+                                    (
+                                        <div className="spinner-border" role="status">
+                                            <span className="visually-hidden"></span>
+                                        </div>
+                                    )
+                                
                             ):
                             (
                                 <p className='text-center text-dark fst-italic fs-6'>To add games on list, make search on search box.</p>

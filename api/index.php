@@ -93,25 +93,68 @@ switch($data['action']){
         $idString = $idString . ')';
         // Get Games
         $igdb = new IGDB();
-        $games = $igdb->GetGamesData($token, $idString);
-        $games = json_decode($games);
-        $covers = $igdb->GetGamesCovers($token, $idString);
-        $covers = json_decode($covers);
-        $response = array();
-        foreach($games as $key => $game){
-            $current = new stdClass();
-            $current->id = $game->id;
-            $current->name = $game->name;
-            $current->status = $list[$key]['status'];
-            $current->cover = $covers[$key]->image_id;
-            // Push
-            $response[] = $current;
+        $games = json_decode($igdb->GetGamesData($token, $idString));
+        $covers = json_decode($igdb->GetGamesCovers($token, $idString));
+        echo json_encode(CreateGamesReult($games, $covers, $list));
+    break;
+    case 'game-search':
+        if(!isset($data['token'])){
+            ExitWError('Token not found');
         }
-        echo json_encode($response);
+        $token = $data['token'];
+        $name = isset($data['user']) ? $data['user'] : null;
+        $password = isset($data['password']) ? $data['password'] : null;
+        $user = new User($name, $password);
+        $database = new Database($db);
+        $userId = $database->CheckCredentials($user);
+        if(!$userId){
+            ExitWError('Auth Failed');
+        }
+        // Search Actions
+        $searchString = isset($data['searchText']) ? htmlspecialchars(trim($data['searchText'])) : null;
+        if(!$searchString){
+            ExitWError('Search Failed');
+        }
+        $igdb = new IGDB();
+        $games = json_decode($igdb->SearchGamesData($token, $searchString));
+        // Setup Id String
+        $idString = "(";
+        foreach($games as $key => $row){
+            if($key != 0){
+                $idString = $idString . ',';
+            }
+            $idString = $idString . $row->id;
+        }
+        $idString = $idString . ')';
+        $covers = json_decode($igdb->GetGamesCovers($token, $idString, false));
+        echo json_encode(CreateGamesReult($games, $covers));
+
     break;
     default:
         ExitWError('Unknown Action');
     break;
 }
-
+function CreateGamesReult($games, $covers, $list = null){
+    $response = array();
+    foreach($games as $key => $game){
+        $current = new stdClass();
+        $current->id = $game->id;
+        $current->name = $game->name;
+        $current->cover = FindImageinCovers($covers,$game->id);
+        if(isset($list)){
+            $current->status = $list[$key]['status'];
+        }
+        // Push
+        $response[] = $current;
+    }
+    return $response;
+}
+function FindImageinCovers($covers, $gameID){
+    foreach($covers as $cover){
+        if($gameID == $cover->game){
+            return $cover->image_id;
+        }
+    }
+    return 0;
+}
 ?>

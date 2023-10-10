@@ -25,7 +25,7 @@ function App() {
         return;
     }
     runTime++;
-    if(!loggedIn || !user || !passHash){
+    if(loggedIn && user && passHash){
         if(localStorage.getItem("accessToken") === null || localStorage.getItem("expiryTime") < Date.now()){
             SetupToken();
         }
