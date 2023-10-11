@@ -50,6 +50,19 @@ function List() {
     });
 };
 
+const DeleteFromList = (game)=>{
+  const updatedList = list.filter(item => item.id !== game);
+  setList(updatedList);
+}
+const ComplateFromList = (game)=>{
+  const updatedList = list.map(item => item.id === game ? { ...item, status: 1 } : item);
+  setList(updatedList);
+}
+const RelistFromList = (game)=>{
+  const updatedList = list.map(item => item.id === game ? { ...item, status: 0 } : item);
+  setList(updatedList);
+}
+
   return (
     <>
     <Navbar/>
@@ -61,7 +74,7 @@ function List() {
                   {list.length > 0 ? (
                     <div className='row shadow border border-success bg-dark bg-gradient me-1 pt-3'>
                       {list.filter(game => !game.status).map((game, index) => (
-                        <Card key={index} game={game} type={0} />
+                        <Card key={index} game={game} type={0} delete={DeleteFromList} complate={ComplateFromList} relist={RelistFromList} />
                         ))}
                     </div>
                   ):(
@@ -75,7 +88,7 @@ function List() {
                   {list.length > 0 ? (
                     <div className='row shadow border border-dark bg-black bg-gradient ms-1 pt-3'>
                       {list.filter(game => game.status).map((game, index) => (
-                        <Card key={index} game={game} type={1} />
+                        <Card key={index} game={game} type={1} delete={DeleteFromList} complate={ComplateFromList} relist={RelistFromList} />
                         ))}
                     </div>
                   ):(

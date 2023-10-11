@@ -107,7 +107,7 @@ function Card(props) {
                 console.warn(response.data.message);
             }
             else if(response.data.success){// Success
-                console.log(response.data);
+                props.delete(props.game.id);
             }
             else{
                 console.log(response.data);
@@ -138,7 +138,7 @@ function Card(props) {
                 console.warn(response.data.message);
             }
             else if(response.data.success){// Success
-                console.log(response.data);
+                props.complate(props.game.id);
             }
             else{
                 console.log(response.data);
@@ -169,7 +169,7 @@ function Card(props) {
                 console.warn(response.data.message);
             }
             else if(response.data.success){// Success
-                console.log(response.data);
+                props.relist(props.game.id);
             }
             else{
                 console.log(response.data);
