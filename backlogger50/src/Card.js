@@ -13,7 +13,7 @@ function Card(props) {
     const [platformAndroid, setPlatformAndroid] = useState();
     const [dateString, setDateString] = useState();
 
-    const loggedIn = sessionStorage.getItem("loggedIn");
+    //const loggedIn = sessionStorage.getItem("loggedIn");
     const user = sessionStorage.getItem("user");
     const passHash = sessionStorage.getItem("passHash");
 
@@ -65,7 +65,101 @@ function Card(props) {
             action: 'add-game',
             user: user,
             password: passHash,
-            game: props.game.id
+            game: props.game.id,
+            gameName: props.game.name
+        })
+        .then((response)=>{
+            if(response.data.error){
+                console.error(response.data.error);
+            }
+            else if(response.data.message){
+                console.warn(response.data.message);
+            }
+            else if(response.data.success){// Success
+                console.log(response.data);
+            }
+            else{
+                console.log(response.data);
+            }
+        })
+        .catch((error)=>{
+            console.error(error);
+        });
+    };
+    const Delete = ()=>{
+        if(!props.game.id){
+            console.error('No Id');
+            return;
+        }
+        axios
+        .post(`${process.env.REACT_APP_ENDPOINT}`,{
+            action: 'delete-game',
+            user: user,
+            password: passHash,
+            game: props.game.id,
+            gameName: props.game.name
+        })
+        .then((response)=>{
+            if(response.data.error){
+                console.error(response.data.error);
+            }
+            else if(response.data.message){
+                console.warn(response.data.message);
+            }
+            else if(response.data.success){// Success
+                console.log(response.data);
+            }
+            else{
+                console.log(response.data);
+            }
+        })
+        .catch((error)=>{
+            console.error(error);
+        });
+    };
+    const Complate = ()=>{
+        if(!props.game.id){
+            console.error('No Id');
+            return;
+        }
+        axios
+        .post(`${process.env.REACT_APP_ENDPOINT}`,{
+            action: 'complate-game',
+            user: user,
+            password: passHash,
+            game: props.game.id,
+            gameName: props.game.name
+        })
+        .then((response)=>{
+            if(response.data.error){
+                console.error(response.data.error);
+            }
+            else if(response.data.message){
+                console.warn(response.data.message);
+            }
+            else if(response.data.success){// Success
+                console.log(response.data);
+            }
+            else{
+                console.log(response.data);
+            }
+        })
+        .catch((error)=>{
+            console.error(error);
+        });
+    };
+    const ReList = ()=>{
+        if(!props.game.id){
+            console.error('No Id');
+            return;
+        }
+        axios
+        .post(`${process.env.REACT_APP_ENDPOINT}`,{
+            action: 'relist-game',
+            user: user,
+            password: passHash,
+            game: props.game.id,
+            gameName: props.game.name
         })
         .then((response)=>{
             if(response.data.error){
@@ -141,15 +235,15 @@ function Card(props) {
                 <div className='row'>
                     <div className='col-6 m-0 p-0'>
                         {props.type !== 2 && (
-                            <button className="btn btn-lg btn-outline-danger border-0 text-light bg-gradient rounded-0 d-flex justify-content-end"><i className="bi bi-trash"></i></button>
+                            <button className="btn btn-lg btn-outline-danger border-0 text-light bg-gradient rounded-0 d-flex justify-content-end" onClick={Delete}><i className="bi bi-trash"></i></button>
                         )}
                     </div>
                     <div className='col-6 m-0 p-0 d-flex d-flex justify-content-end'>
                         {props.type === 0 && (
-                            <button className="shadow btn btn-lg btn-success bg-gradient rounded-0 "><i className="bi bi-check-lg"></i></button>
+                            <button className="shadow btn btn-lg btn-success bg-gradient rounded-0 " onClick={Complate}><i className="bi bi-check-lg"></i></button>
                         )}
                         {props.type === 1 && (
-                            <button className="shadow btn btn-lg btn-secondary bg-gradient rounded-0 "><i className="bi bi-arrow-counterclockwise"></i></button>
+                            <button className="shadow btn btn-lg btn-secondary bg-gradient rounded-0 " onClick={ReList}><i className="bi bi-arrow-counterclockwise"></i></button>
                         )}
                         {props.type === 2 && (
                             <button className="shadow btn btn-lg btn-primary bg-gradient rounded-0 " onClick={Add}><i className="bi bi-plus-lg"></i></button>

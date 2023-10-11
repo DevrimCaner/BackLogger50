@@ -2,11 +2,12 @@
 include_once 'config/database-config.php';
 
 class Database{
-    protected PDO $db;
+    public PDO $db;
 
     public function __construct(PDO $db) {
         $this->db = $db;
     }
+    // User Actions
     public function CheckCredentials(User $user = null){
         if(!$user){
             return 0;
@@ -48,7 +49,7 @@ class Database{
         if($this->UserMailExist($user->mail)){
             ExitWError('This mail is using by another user');
         }
-        // INSERT
+        // Insert
         $query = $this->db->prepare("INSERT INTO users SET 
         name = :name,
         mail = :mail,
@@ -59,38 +60,6 @@ class Database{
             'mail' => $user->mail,
             'password' => $user->password,
             'created' => date("Y-m-d H:i:s")
-        ]);
-        if($insert){
-            return true;
-        }
-        return false;
-    }
-    public function GetList($id){
-        if(!is_numeric($id)){
-            return null;
-        }
-        $query = $this->db->prepare("SELECT content_id, status FROM lists WHERE user_id = :id ORDER BY content_id");
-        $query->execute([
-            'id' => $id
-        ]);
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
-    }
-    public function AddGame($game, $user){
-        if(!is_numeric($game)){
-            ExitWError('Invalid game data');
-        }
-        if(!is_numeric($user)){
-            ExitWError('Invalid user data');
-        }
-        // INSERT
-        $query = $this->db->prepare("INSERT INTO lists SET 
-        user_id = :user,
-        content_id = :game,
-        status = 0");
-        $insert = $query->execute([
-            'user' => $user,
-            'game' => $game
         ]);
         if($insert){
             return true;
@@ -119,6 +88,101 @@ class Database{
         }
         return true;
     }
+
+    // Crud
+
+    public function GetList($id){
+        if(!is_numeric($id)){
+            return null;
+        }
+        $query = $this->db->prepare("SELECT content_id, status FROM lists WHERE user_id = :id ORDER BY content_id");
+        $query->execute([
+            'id' => $id
+        ]);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    
+    
+    public function AddGame($game, $user){
+        if(!is_numeric($game)){
+            ExitWError('Invalid game data');
+        }
+        if(!is_numeric($user)){
+            ExitWError('Invalid user data');
+        }
+        // Insert
+        $query = $this->db->prepare("INSERT INTO lists SET 
+        user_id = :user,
+        content_id = :game,
+        status = 0");
+        $insert = $query->execute([
+            'user' => $user,
+            'game' => $game
+        ]);
+        if($insert){
+            return true;
+        }
+        return false;
+    }
+
+    public function DeleteGame($game, $user){
+        if(!is_numeric($game)){
+            ExitWError('Invalid game data');
+        }
+        if(!is_numeric($user)){
+            ExitWError('Invalid user data');
+        }
+        // Delete
+        $query = $this->db->prepare("DELETE FROM lists WHERE user_id = :user AND content_id = :game ;");
+        $delete = $query->execute([
+            'user' => $user,
+            'game' => $game
+        ]);
+        if($delete){
+            return true;
+        }
+        return false;
+    }
+    
+    public function ComplateGame($game, $user){
+        if(!is_numeric($game)){
+            ExitWError('Invalid game data');
+        }
+        if(!is_numeric($user)){
+            ExitWError('Invalid user data');
+        }
+        // Update
+        $query = $this->db->prepare("UPDATE lists SET status = 1 WHERE user_id = :user AND content_id = :game ;");
+        $update = $query->execute([
+            'user' => $user,
+            'game' => $game
+        ]);
+        if($update){
+            return true;
+        }
+        return false;
+    }
+
+    public function ReListGame($game, $user){
+        if(!is_numeric($game)){
+            ExitWError('Invalid game data');
+        }
+        if(!is_numeric($user)){
+            ExitWError('Invalid user data');
+        }
+        // Update
+        $query = $this->db->prepare("UPDATE lists SET status = 0 WHERE user_id = :user AND content_id = :game ;");
+        $update = $query->execute([
+            'user' => $user,
+            'game' => $game
+        ]);
+        if($update){
+            return true;
+        }
+        return false;
+    }
+    
 }
 
 class User{

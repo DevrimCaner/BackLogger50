@@ -131,7 +131,6 @@ switch($data['action']){
 
     break;
     case 'add-game':
-        //$data['game']
         $name = isset($data['user']) ? $data['user'] : null;
         $password = isset($data['password']) ? $data['password'] : null;
         $user = new User($name, $password);
@@ -144,7 +143,55 @@ switch($data['action']){
         $gameName = isset($data['gameName']) ? $data['gameName'] : '';
         $add = $database->AddGame($game, $userId);
         if($add){
-            ExitWSuccess($gameName . 'Added successful!');
+            ExitWSuccess($gameName . ' Added successful!');
+        }
+    break;
+    case 'complate-game':
+        $name = isset($data['user']) ? $data['user'] : null;
+        $password = isset($data['password']) ? $data['password'] : null;
+        $user = new User($name, $password);
+        $database = new Database($db);
+        $userId = $database->CheckCredentials($user);
+        if(!$userId){
+            ExitWError('Auth Failed');
+        }
+        $game = isset($data['game']) ? $data['game'] : null;
+        $gameName = isset($data['gameName']) ? $data['gameName'] : '';
+        $update = $database->ComplateGame($game, $userId);
+        if($update){
+            ExitWSuccess($gameName . ' Complated!');
+        }
+    break;
+    case 'relist-game':
+        $name = isset($data['user']) ? $data['user'] : null;
+        $password = isset($data['password']) ? $data['password'] : null;
+        $user = new User($name, $password);
+        $database = new Database($db);
+        $userId = $database->CheckCredentials($user);
+        if(!$userId){
+            ExitWError('Auth Failed');
+        }
+        $game = isset($data['game']) ? $data['game'] : null;
+        $gameName = isset($data['gameName']) ? $data['gameName'] : '';
+        $update = $database->ReListGame($game, $userId);
+        if($update){
+            ExitWSuccess($gameName . ' Relisted');
+        }
+    break;
+    case 'delete-game':
+        $name = isset($data['user']) ? $data['user'] : null;
+        $password = isset($data['password']) ? $data['password'] : null;
+        $user = new User($name, $password);
+        $database = new Database($db);
+        $userId = $database->CheckCredentials($user);
+        if(!$userId){
+            ExitWError('Auth Failed');
+        }
+        $game = isset($data['game']) ? $data['game'] : null;
+        $gameName = isset($data['gameName']) ? $data['gameName'] : '';
+        $delete = $database->DeleteGame($game, $userId);
+        if($delete){
+            ExitWSuccess($gameName . ' Deleted successful!');
         }
     break;
     default:
