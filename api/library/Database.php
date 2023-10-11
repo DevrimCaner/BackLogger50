@@ -76,6 +76,27 @@ class Database{
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function AddGame($game, $user){
+        if(!is_numeric($game)){
+            ExitWError('Invalid game data');
+        }
+        if(!is_numeric($user)){
+            ExitWError('Invalid user data');
+        }
+        // INSERT
+        $query = $this->db->prepare("INSERT INTO lists SET 
+        user_id = :user,
+        content_id = :game,
+        status = 0");
+        $insert = $query->execute([
+            'user' => $user,
+            'game' => $game
+        ]);
+        if($insert){
+            return true;
+        }
+        return false;
+    }
     public function UserMailExist($mail){
         $query = $this->db->prepare("SELECT COUNT(id) FROM users WHERE mail = :mail");
         $query->execute([

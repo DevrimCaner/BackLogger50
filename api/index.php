@@ -130,10 +130,28 @@ switch($data['action']){
         echo json_encode(CreateGamesReult($games, $covers));
 
     break;
+    case 'add-game':
+        //$data['game']
+        $name = isset($data['user']) ? $data['user'] : null;
+        $password = isset($data['password']) ? $data['password'] : null;
+        $user = new User($name, $password);
+        $database = new Database($db);
+        $userId = $database->CheckCredentials($user);
+        if(!$userId){
+            ExitWError('Auth Failed');
+        }
+        $game = isset($data['game']) ? $data['game'] : null;
+        $gameName = isset($data['gameName']) ? $data['gameName'] : '';
+        $add = $database->AddGame($game, $userId);
+        if($add){
+            ExitWSuccess($gameName . 'Added successful!');
+        }
+    break;
     default:
         ExitWError('Unknown Action');
     break;
 }
+// CUSTOM FUNCTIONS
 function CreateGamesReult($games, $covers, $list = null){
     $response = array();
     foreach($games as $key => $game){

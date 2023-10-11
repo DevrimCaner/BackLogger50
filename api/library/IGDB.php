@@ -76,7 +76,7 @@ class IGDB{
     public function SearchGamesData($token, $searchText){
         global $clientId;
         $url = 'https://api.igdb.com/v4/games/';
-        $body = "fields id, name, cover, platforms, first_release_date; search \"". $searchText ."\"; where version_parent = null & category = 0 & cover != null; limit 10;";
+        $body = "fields id, name, cover, platforms, first_release_date; search \"". $searchText ."\"; where version_parent = null & cover != null; limit 10;";
         // Initialize cURL session
         $ch = curl_init($url);
         // Set cURL options
