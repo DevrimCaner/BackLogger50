@@ -1,6 +1,6 @@
 
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -11,6 +11,7 @@ import List from './List.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import Navbar from './Navbar.js';
+import Alertbox from './Alertbox.js';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
   const loggedIn = sessionStorage.getItem("loggedIn");
   const user = sessionStorage.getItem("user");  
   const passHash = sessionStorage.getItem("passHash");
+  const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
     // This code is only for development stage
@@ -58,13 +60,29 @@ function App() {
     });
   };
 
+  const AddAlert = (message, type) =>{
+    const newAlert = {message: message, type:type};
+    const updatedAlerts = [newAlert, ...alerts];
+    setAlerts(updatedAlerts);
+  }
+
   return (
     <>
+    <div className='fixed-top mt-5 px-5'>
+      {
+        alerts.length > 0 &&(
+            alerts.map((item, index)=>(
+              <Alertbox key={index} message={item.message} type={item.type}/>
+              )
+            )
+          )
+      }
+    </div>
     <Router>
       <Routes>
         <Route path='/' exact Component={Main}/>
-        <Route path='/add' Component={Add}/>
-        <Route path='/list' Component={List}/>
+        <Route path='/add' element={<Add addAlert={AddAlert} />} />
+        <Route path='/list' element={<List addAlert={AddAlert} />} />
         <Route path='/login' Component={Login}/>
         <Route path='/register' Component={Register}/>
       </Routes>

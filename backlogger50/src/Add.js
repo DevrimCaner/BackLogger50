@@ -4,7 +4,7 @@ import axios from 'axios';
 import Card from './Card';
 import Navbar from './Navbar.js';
 
-function Add() {
+function Add(props) {
     const searchTimeout = 2000;
     const [searchText, setSearchText] = useState();
     const [notFound, setNotFound] = useState();
@@ -58,6 +58,12 @@ function Add() {
         });
     };
 
+    const AddGame = (game, message)=>{
+        const updatedList = results.filter(item => item.id !== game);
+        setResults(updatedList);
+        props.addAlert(message, 'success');
+      }
+
   return (
     <>
     <Navbar/>
@@ -75,7 +81,7 @@ function Add() {
                     {results.length > 0 ? (
                     <div className='row'>
                       {results.map((game, index) => (
-                        <Card key={index} game={game} type={2} />
+                        <Card key={index} game={game} type={2} add={AddGame}/>
                         ))}
                     </div>
                     ):(

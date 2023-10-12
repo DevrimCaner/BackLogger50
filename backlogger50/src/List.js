@@ -6,9 +6,10 @@ import axios from 'axios';
 import Card from './Card.js';
 import Navbar from './Navbar.js';
 
-function List() {
+function List(props) {
   let runTime = 0;
   const [list, setList] = useState([]);
+  const [searching, setSearching] = useState(false);
   const navigate = useNavigate();
   const loggedIn = sessionStorage.getItem("loggedIn");
   const user = sessionStorage.getItem("user");
@@ -26,8 +27,9 @@ function List() {
     GetList();
   },[]);
 
-  const GetList = ()=>{
-    axios
+  const GetList = async ()=>{
+    setSearching(true);
+    await axios
     .post(`${process.env.REACT_APP_ENDPOINT}`,{
         action: 'get-list',
         user: user,
@@ -44,24 +46,36 @@ function List() {
         else{
           setList(response.data);
         }
-    })
-    .catch((error)=>{
+      })
+      .catch((error)=>{
         console.error(error);
-    });
+      });
+      setSearching(false)
 };
 
-const DeleteFromList = (game)=>{
+const goAddPage = () =>{
+  navigate('/add');
+}
+
+const DeleteFromList = (game, message)=>{
+  message += ' Deleted !';
   const updatedList = list.filter(item => item.id !== game);
   setList(updatedList);
+  props.addAlert(message, 'danger');
 }
-const ComplateFromList = (game)=>{
+const ComplateFromList = (game, message)=>{
+  message += '  Complated !';
   const updatedList = list.map(item => item.id === game ? { ...item, status: 1 } : item);
   setList(updatedList);
+  props.addAlert(message, 'success');
 }
-const RelistFromList = (game)=>{
+const RelistFromList = (game, message)=>{
+  message += ' Relisted !';
   const updatedList = list.map(item => item.id === game ? { ...item, status: 0 } : item);
   setList(updatedList);
+  props.addAlert(message, 'warning');  
 }
+
 
   return (
     <>
@@ -69,34 +83,36 @@ const RelistFromList = (game)=>{
     <section className='mt-5'>
       <div className="container">
         <div className='row'>
-            <div className='col-md-6'>
-                  <h1 className='text-center mb-3 '>Listed</h1>
-                  {list.length > 0 ? (
-                    <div className='row shadow border border-success bg-dark bg-gradient me-1 pt-3'>
-                      {list.filter(game => !game.status).map((game, index) => (
-                        <Card key={index} game={game} type={0} delete={DeleteFromList} complate={ComplateFromList} relist={RelistFromList} />
-                        ))}
-                    </div>
-                  ):(
-                    <div className="spinner-border" role="status">
-                          <span className="visually-hidden"></span>
-                      </div>
-                  )}
+          {
+            list.length <= 0 &&(
+                searching ? (
+                  <div className="spinner-border" role="status">
+                        <span className="visually-hidden"></span>
+                  </div>
+                ):
+                (
+                  <p className='text-center text-dark fst-italic fs-6'>No items found on the List, you can use <button className='btn btn-link text-dark px-0' onClick={goAddPage}>Add</button> page for addinf games.</p>
+                )
+              )
+          }
+          
+          {list.length > 0 && (
+            <div className='row shadow border border-success bg-dark bg-gradient pt-3'>
+              <h1 className='h2'>Listed</h1>
+              {list.filter(game => !game.status).map((game, index) => (
+                <Card key={index} game={game} type={0} delete={DeleteFromList} complate={ComplateFromList} relist={RelistFromList} />
+                ))}
             </div>
-            <div className='col-md-6'>
-                  <h1 className='text-center mb-3'>Complated</h1>
-                  {list.length > 0 ? (
-                    <div className='row shadow border border-dark bg-black bg-gradient ms-1 pt-3'>
-                      {list.filter(game => game.status).map((game, index) => (
-                        <Card key={index} game={game} type={1} delete={DeleteFromList} complate={ComplateFromList} relist={RelistFromList} />
-                        ))}
-                    </div>
-                  ):(
-                    <div className="spinner-border" role="status">
-                          <span className="visually-hidden"></span>
-                      </div>
-                  )}
+          )}
+          {list.length > 0 && (
+            <div className='row shadow border border-dark bg-black bg-gradient pt-3 mt-2'>
+              <h1 className='h2 text-secondary'>Complated</h1>
+              {list.filter(game => game.status).map((game, index) => (
+                <Card key={index} game={game} type={1} delete={DeleteFromList} complate={ComplateFromList} relist={RelistFromList} />
+                ))}
             </div>
+          )}
+
         </div>
       </div>
     </section>
