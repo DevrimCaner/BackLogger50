@@ -103,6 +103,17 @@ class Database{
         return $result;
     }
     
+    public function GetListAsId($id){
+        if(!is_numeric($id)){
+            return null;
+        }
+        $query = $this->db->prepare("SELECT content_id FROM lists WHERE user_id = :id ORDER BY content_id");
+        $query->execute([
+            'id' => $id
+        ]);
+        $result = $query->fetchAll(PDO::FETCH_COLUMN);
+        return $result;
+    }    
     
     public function AddGame($game, $user){
         if(!is_numeric($game)){

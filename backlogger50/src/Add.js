@@ -42,6 +42,7 @@ function Add(props) {
             searchText: searchText
         })
         .then((response)=>{
+            console.log(response.data)
             if(response.data.error){
                 console.error(response.data.error);
                 return;
@@ -59,7 +60,10 @@ function Add(props) {
     };
 
     const AddGame = (game, message)=>{
-        const updatedList = results.filter(item => item.id !== game);
+        if(results.length < 1){
+            return;
+        }
+        const updatedList = results.map(item => item.id === game ? { ...item, listed: 1 } : item);
         setResults(updatedList);
         props.addAlert(message, 'success');
       }

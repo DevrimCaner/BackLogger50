@@ -127,7 +127,17 @@ switch($data['action']){
         }
         $idString = $idString . ')';
         $covers = json_decode($igdb->GetGamesCovers($token, $idString, false));
-        echo json_encode(CreateGamesReult($games, $covers));
+        $result = CreateGamesReult($games, $covers);
+        $userListed = $database->GetListAsId($userId);
+        // Set Listed values to games
+        foreach($result as $game){
+            $currentListed = 0;
+            if(in_array($game->id, $userListed)){
+                $currentListed = 1;
+            }
+            $game->listed = $currentListed;
+        }
+        echo json_encode($result);
 
     break;
     case 'add-game':
@@ -202,12 +212,6 @@ switch($data['action']){
 function CreateGamesReult($games, $covers, $list = null){
     $response = array();
     foreach($games as $key => $game){
-        /*
-        $current = new stdClass();
-        $current->id = $game->id;
-        $current->name = $game->name;
-        $current->name = $game->platforms;
-        */
         $game->cover = FindImageinCovers($covers,$game->id);
         if(isset($list)){
             $game->status = $list[$key]['status'];
