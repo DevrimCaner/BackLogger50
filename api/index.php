@@ -95,6 +95,10 @@ switch($data['action']){
         $igdb = new IGDB();
         $games = json_decode($igdb->GetGamesData($token, $idString));
         $covers = json_decode($igdb->GetGamesCovers($token, $idString));
+        //print_r($games);
+        //echo '///////////////////////';
+        //print_r($covers);
+        //exit;
         echo json_encode(CreateGamesReult($games, $covers, $list));
     break;
     case 'game-search':

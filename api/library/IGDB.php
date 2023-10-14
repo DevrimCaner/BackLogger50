@@ -26,7 +26,7 @@ class IGDB{
     public function GetGamesData($token, $idString){
         global $clientId;
         $url = 'https://api.igdb.com/v4/games/';
-        $body = "fields id, name, platforms, first_release_date; where id=".$idString.";";
+        $body = "fields id, name, platforms, first_release_date; where id=".$idString."; limit 500;";
         // Initialize cURL session
         $ch = curl_init($url);
         // Set cURL options
@@ -51,7 +51,7 @@ class IGDB{
     public function GetGamesCovers($token, $idString){
         global $clientId;
         $url = 'https://api.igdb.com/v4/covers';
-        $body = "fields image_id, height, width, game; where game=".$idString.";";
+        $body = "fields image_id, height, width, game; where game=".$idString."; limit 500;";
         // Initialize cURL session
         $ch = curl_init($url);
         // Set cURL options
