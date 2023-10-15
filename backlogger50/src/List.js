@@ -37,7 +37,6 @@ function List(props) {
         token: localStorage.getItem("accessToken")
     })
     .then((response)=>{
-        console.log(response.data)
         if(response.data.error){
           console.log(response.data.error);
         }

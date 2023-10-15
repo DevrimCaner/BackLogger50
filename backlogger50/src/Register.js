@@ -86,6 +86,7 @@ function Register() {
                   <input className="form-control mb-4 text-light bg-secondary bg-gradient bg-opacity-50 shadow rounded-0" type="text" placeholder="Username" value={user || ''} onChange={(e) => setUser(e.target.value)}/>
                   <input className="form-control mb-4 text-light bg-secondary bg-gradient bg-opacity-50 shadow rounded-0" type="Password" placeholder="Password" value={password || ''} onChange={(e) => setPassword(e.target.value)}/>
                   <input className="form-control mb-4 text-light bg-secondary bg-gradient bg-opacity-50 shadow rounded-0" type="Password" placeholder="Confirm Password" value={confirm || ''} onChange={(e) => setConfirm(e.target.value)}/>
+                  <p className='opacity-75'><i>This app made for <b>education</b> purposes and it is still on the <b>development</b> stage. That's why there is no <b>End User Agreement</b> for now.</i></p>
                   <button className="shadow mb-5 px-4 btn btn-primary bg-gradient rounded-0" onClick={Register}>Register</button>
                   {
                   warningMessage && (

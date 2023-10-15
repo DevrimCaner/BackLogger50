@@ -42,7 +42,6 @@ function Add(props) {
             searchText: searchText
         })
         .then((response)=>{
-            console.log(response.data)
             if(response.data.error){
                 console.error(response.data.error);
                 return;
@@ -78,7 +77,7 @@ function Add(props) {
                     <h1 className='text-center mb-4'>Add Game</h1>
                     <div className='row'>
                         <div className="input-group mb-3">
-                            <input className="form-control text-light bg-secondary bg-gradient shadow rounded-0" type="search" placeholder="Search" aria-label="Search" onChange={(e) => setSearchText(e.target.value)}/>
+                            <input className="form-control text-light bg-secondary bg-gradient shadow rounded-0 z-3" type="search" placeholder="Search" aria-label="Search" onChange={(e) => setSearchText(e.target.value)}/>
                         </div>
                     </div>
 

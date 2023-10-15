@@ -23,9 +23,9 @@ function Navbar(props) {
     };
     return (
         <>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient shadow">
+        <nav className="sticky-top site-header navbar navbar-expand-lg navbar-dark bg-black bg-opacity-75 shadow">
             <div className="container-fluid">
-                <a className="navbar-brand h1 text-light mb-0" href="/"><span className="text-success">Back</span><span className="text-primary">Logger</span><span className="text-secondary">50</span></a>
+                <a className="navbar-brand h1 text-light mb-0" href="/">BackLogger50</a>
                 <button className="navbar-toggler rounded-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
