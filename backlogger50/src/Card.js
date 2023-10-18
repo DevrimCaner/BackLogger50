@@ -184,7 +184,7 @@ function Card(props) {
     <div className='col-sm-6 col-md-4 col-lg-3' >
         <div className={`w-100 card m-0 mb-3 p-0 bg-dark bg-gradient text-light shadow rounded-0 border ${props.type === 0 && ('border-success')} ${props.type === 1 && ('border-secondary bg-opacity-50')} ${props.type === 2 && ( props.game.listed ? ('border-info opacity-50'):('border-primary'))}`} >
             <div className='card-header p-0 border-bottom-0'>
-                    <img src={`${props.game.cover ? (`https://images.igdb.com/igdb/image/upload/t_cover_big/${props.game.cover}.png`):('./empty-game-cover.png') }`} alt='...' className={`img-fluid rounded-0 w-100 ${props.type === 1 && ('opacity-50')}`}/>
+                    <img src={`${props.game.cover ? (`https://images.igdb.com/igdb/image/upload/t_cover_big/${props.game.cover}.png`):('https://backlogger50.devrimcaner.com/static/media/empty-game-cover.png') }`} alt='...' className={`img-fluid rounded-0 w-100 ${props.type === 1 && ('opacity-50')}`}/>
             </div>
             <div className="card-body p-0 px-2 pt-1">
                 <h4 className={`card-title mb-0 ${props.type === 1 && ('opacity-75')}`}>{props.game.name}</h4>

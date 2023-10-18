@@ -7,7 +7,7 @@ function Main(props) {
       <>
       <Navbar/>
       <section>
-        <header className='w-100 bg-dark' style={{height: '700px', backgroundImage: "url('./landing.jpg')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundSize: 'cover' }}>
+        <header className='w-100 bg-dark' style={{height: '700px', backgroundImage: "url('https://backlogger50.devrimcaner.com/static/media/landing.png')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundSize: 'cover' }}>
           <div className='w-100 h-100 bg-black bg-opacity-50'>
             <div className="container pt-5 ps-3 z-3">
               <h1 className='mt-5 text-light' style={{fontSize: '52px'}}>Welcome To BackLogger50</h1>
@@ -46,7 +46,7 @@ function Main(props) {
               </p>
             </div>
             <div className='col-md-5'>
-              <img className='w-100 border' src='./add.gif'></img>
+              <img className='w-100 border' src='https://backlogger50.devrimcaner.com/static/media/add.gif'></img>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@ function Main(props) {
               </p>
             </div>
             <div className='col-md-5'>
-              <img className='w-100 border' src='./list.gif'></img>
+              <img className='w-100 border' src='https://backlogger50.devrimcaner.com/static/media/list.gif'></img>
             </div>
           </div>
         </div>

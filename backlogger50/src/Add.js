@@ -13,9 +13,6 @@ function Add(props) {
     const loggedIn = sessionStorage.getItem("loggedIn");
     const user = sessionStorage.getItem("user");
     const passHash = sessionStorage.getItem("passHash");
-
-    const sampleData = [{cover: "co2n19", id: 621, name: "Call of Duty"}, {cover: "co1n24", id: 55056, name: "Age of Empires II: Definitive Edition"}];
-
     useEffect(() => {
         if(!loggedIn || !user || !passHash){
             navigate('/login');

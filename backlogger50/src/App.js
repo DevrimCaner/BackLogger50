@@ -10,12 +10,10 @@ import Add from './Add.js';
 import List from './List.js';
 import Login from './Login.js';
 import Register from './Register.js';
-import Navbar from './Navbar.js';
 import Alertbox from './Alertbox.js';
 import './App.css';
 
 function App() {
-  let runTime = 0;
   const loggedIn = sessionStorage.getItem("loggedIn");
   const user = sessionStorage.getItem("user");  
   const passHash = sessionStorage.getItem("passHash");
@@ -23,10 +21,6 @@ function App() {
 
   useEffect(() => {
     // This code is only for development stage
-    if(runTime !== 0){
-        return;
-    }
-    runTime++;
     if(loggedIn && user && passHash){
         if(localStorage.getItem("accessToken") === null || localStorage.getItem("expiryTime") < Date.now()){
             SetupToken();

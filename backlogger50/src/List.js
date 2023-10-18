@@ -7,7 +7,6 @@ import Card from './Card.js';
 import Navbar from './Navbar.js';
 
 function List(props) {
-  let runTime = 0;
   const [list, setList] = useState([]);
   const [searching, setSearching] = useState(false);
   const navigate = useNavigate();
@@ -16,11 +15,6 @@ function List(props) {
   const passHash = sessionStorage.getItem("passHash");
   
   useEffect(() =>{
-    // This code is only for development stage
-    if(runTime !== 0){
-      return;
-    }
-    runTime++;
     if(!loggedIn || !user || !passHash){
       navigate('/login');
     }
@@ -37,20 +31,21 @@ function List(props) {
         token: localStorage.getItem("accessToken")
     })
     .then((response)=>{
-        if(response.data.error){
-          console.log(response.data.error);
-        }
-        else if(response.data.message){
-          console.log(response.data.message);
-        }
-        else{
-          setList(response.data);
-        }
-      })
-      .catch((error)=>{
-        console.error(error);
-      });
-      setSearching(false)
+      console.log(response.data);
+      if(response.data.error){
+        console.log(response.data.error);
+      }
+      else if(response.data.message){
+        console.log(response.data.message);
+      }
+      else{
+        setList(response.data);
+      }
+    })
+    .catch((error)=>{
+      console.error(error);
+    });
+    setSearching(false)
 };
 
 const goAddPage = () =>{
@@ -65,13 +60,13 @@ const DeleteFromList = (game, message)=>{
 }
 const ComplateFromList = (game, message)=>{
   message += '  Complated !';
-  const updatedList = list.map(item => item.id === game ? { ...item, status: 1 } : item);
+  const updatedList = list.map(item => item.id === game ? { ...item, status: "1" } : item);
   setList(updatedList);
   props.addAlert(message, 'success');
 }
 const RelistFromList = (game, message)=>{
   message += ' Relisted !';
-  const updatedList = list.map(item => item.id === game ? { ...item, status: 0 } : item);
+  const updatedList = list.map(item => item.id === game ? { ...item, status: "0" } : item);
   setList(updatedList);
   props.addAlert(message, 'warning');  
 }
@@ -99,7 +94,7 @@ const RelistFromList = (game, message)=>{
           {list.length > 0 && (
             <div className='row shadow border border-success bg-dark bg-gradient pt-3'>
               <h1 className='h2'>Listed</h1>
-              {list.filter(game => !game.status).map((game, index) => (
+              {list.filter(game => game.status === "0").map((game, index) => (
                 <Card key={index} game={game} type={0} delete={DeleteFromList} complate={ComplateFromList} relist={RelistFromList} />
                 ))}
             </div>
@@ -107,7 +102,7 @@ const RelistFromList = (game, message)=>{
           {list.length > 0 && (
             <div className='row shadow border border-dark bg-black bg-gradient pt-3 mt-2'>
               <h1 className='h2 text-secondary'>Complated</h1>
-              {list.filter(game => game.status).map((game, index) => (
+              {list.filter(game => game.status === "1").map((game, index) => (
                 <Card key={index} game={game} type={1} delete={DeleteFromList} complate={ComplateFromList} relist={RelistFromList} />
                 ))}
             </div>
