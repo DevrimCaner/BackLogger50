@@ -1,4 +1,4 @@
-# YOUR PROJECT TITLE
+# BackLogger50
 #### Video Demo: https://www.youtube.com/watch?v=YTr_7DS-C0I
 #### Description:
 BackLogger50 is an web app for back logging video games which is made with ReactJS and PHP.
